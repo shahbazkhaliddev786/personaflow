@@ -5,7 +5,6 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Brain, Users, Zap, Shield, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import Footer from "@/components/footer"
-import Navigation from "@/components/navigation"
 
 export default function AboutPage() {
   const features = [
