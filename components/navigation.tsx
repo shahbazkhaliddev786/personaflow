@@ -1,49 +1,19 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Brain, Menu, X, LogOut, User } from "lucide-react"
+import { Brain, Menu, X } from "lucide-react"
 import { useState } from "react"
-import { useAuth } from "@/contexts/auth-context"
 
 export default function Navigation() {
   const pathname = usePathname()
-  const router = useRouter()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { user, logout, isLoading } = useAuth()
 
   const navItems = [
     { href: "/", label: "Home" },
     { href: "/chatbots", label: "Chatbots" },
   ]
-
-  const handleLogout = () => {
-    logout()
-    router.push("/")
-    setIsMenuOpen(false)
-  }
-
-  if (isLoading) {
-    return (
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-200 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center space-x-2 group">
-              <div className="p-2 bg-primary rounded-lg group-hover:scale-110 transition-transform duration-200">
-                <Brain className="h-6 w-6 text-white" />
-              </div>
-              <span className="text-xl font-bold text-gray-900">AI Companion</span>
-            </Link>
-            <div className="animate-pulse flex space-x-4">
-              <div className="h-8 w-16 bg-gray-200 rounded"></div>
-              <div className="h-8 w-20 bg-gray-200 rounded"></div>
-            </div>
-          </div>
-        </div>
-      </nav>
-    )
-  }
 
   return (
     <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-200 z-50">
@@ -74,33 +44,14 @@ export default function Navigation() {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            {user ? (
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2 text-gray-700">
-                  <User className="h-4 w-4" />
-                  <span className="text-sm font-medium">{user.name}</span>
-                </div>
-                <Button
-                  onClick={handleLogout}
-                  variant="ghost"
-                  className="hover:bg-red-50 hover:text-red-600 flex items-center space-x-2"
-                >
-                  <LogOut className="h-4 w-4" />
-                  <span>Logout</span>
-                </Button>
-              </div>
-            ) : (
-              <>
-                <Link href="/login">
-                  <Button variant="ghost" className="hover:bg-primary/10">
-                    Login
-                  </Button>
-                </Link>
-                <Link href="/signup">
-                  <Button className="bg-primary hover:bg-primary/90">Sign Up</Button>
-                </Link>
-              </>
-            )}
+            <Link href="/login">
+              <Button variant="ghost" className="hover:bg-primary/10">
+                Login
+              </Button>
+            </Link>
+            <Link href="/signup">
+              <Button className="bg-primary hover:bg-primary/90">Sign Up</Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -126,33 +77,14 @@ export default function Navigation() {
                 </Link>
               ))}
               <div className="flex flex-col space-y-2 pt-4 border-t">
-                {user ? (
-                  <>
-                    <div className="flex items-center space-x-2 text-gray-700 px-3 py-2">
-                      <User className="h-4 w-4" />
-                      <span className="text-sm font-medium">{user.name}</span>
-                    </div>
-                    <Button
-                      onClick={handleLogout}
-                      variant="ghost"
-                      className="w-full justify-start hover:bg-red-50 hover:text-red-600"
-                    >
-                      <LogOut className="h-4 w-4 mr-2" />
-                      Logout
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Link href="/login" onClick={() => setIsMenuOpen(false)}>
-                      <Button variant="ghost" className="w-full justify-start">
-                        Login
-                      </Button>
-                    </Link>
-                    <Link href="/signup" onClick={() => setIsMenuOpen(false)}>
-                      <Button className="w-full bg-primary hover:bg-primary/90">Sign Up</Button>
-                    </Link>
-                  </>
-                )}
+                <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+                  <Button variant="ghost" className="w-full justify-start">
+                    Login
+                  </Button>
+                </Link>
+                <Link href="/signup" onClick={() => setIsMenuOpen(false)}>
+                  <Button className="w-full bg-primary hover:bg-primary/90">Sign Up</Button>
+                </Link>
               </div>
             </div>
           </div>
