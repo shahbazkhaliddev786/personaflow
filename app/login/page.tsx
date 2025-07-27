@@ -55,6 +55,9 @@ export default function LoginPage() {
 
       const data = await response.json()
       console.log("Success response:", data)
+        const token = data.token;
+      console.log("Received token:", token)
+      localStorage.setItem("token", token)
 
       if (data.message) {
         setMessage(data.message)
@@ -62,8 +65,8 @@ export default function LoginPage() {
           router.push("/chatbots")
         }, 1500)
       }
-    } catch (err) {
-      console.error("Login error:", err)
+    } catch (err:any) {
+      console.error("Login error:", err.message)
       if (err instanceof TypeError && err.message.includes("fetch")) {
         setError("Cannot connect to server. Make sure your backend is running on port 4000.")
       } else {

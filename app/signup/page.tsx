@@ -57,6 +57,9 @@ export default function SignupPage() {
       }
 
       const data = await response.json()
+      const token = data.token;
+      console.log("Received token:", token)
+      localStorage.setItem("token", token)
       console.log("Success response:", data)
 
       if (data.message) {
@@ -65,8 +68,8 @@ export default function SignupPage() {
           router.push("/chatbots")
         }, 1500)
       }
-    } catch (err) {
-      console.error("Signup error:", err)
+    } catch (err:any) {
+      console.error("Signup error:", err.message)
       if (err instanceof TypeError && err.message.includes("fetch")) {
         setError("Cannot connect to server. Make sure your backend is running on port 4000.")
       } else {
@@ -111,7 +114,7 @@ export default function SignupPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Password (Must be 8 characters long)</Label>
               <Input
                 id="password"
                 type="password"
